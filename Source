@@ -1,0 +1,7 @@
+--Credits goes to the devs!
+--Scripts Below:
+--Scripts
+loadstring(game:HttpGet("https://raw.githubusercontent.com/khoaScript/scripts/master/flee-the-facility.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Drifty96/ftfgui/main/ftfgui", true))()
+loadstring(game:HttpGet("https://paste.ee/r/Q2ekT/0"))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
