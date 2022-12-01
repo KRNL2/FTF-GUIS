@@ -1,0 +1,89 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+local Window = Library.CreateLib("Flee the Facility | By Mr_Bullfrog (Blizzard#8337)", "Serpent")
+
+local Tab = Window:NewTab("Home")
+local Section = Tab:NewSection("Last Updated 10/30/22")
+Section:NewLabel("LabelText")
+Section:NewKeybind("Press Z to hide/show GUI", "Change UI Keybind", Enum.KeyCode.Z, function()
+	Library:ToggleUI()
+end)
+
+local Tab = Window:NewTab("ESP")
+local Section = Tab:NewSection("Visuals")
+
+
+
+
+local Tab = Window:NewTab("Player")
+local Section = Tab:NewSection("Local Player")
+
+Section:NewButton("No error while hacking", "No error while hacking", function()
+spawn (function()
+while true do
+wait()
+if neverfailhack == true then
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+end
+end
+end)
+end)
+
+Section:NewButton("No error while hacking", "No error while hacking", function()
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+end)
+
+Section:NewButton("No error while hacking #3", "No error while hacking", function()
+
+end)
+
+Section:NewSlider("Walkspeed", "Change walkspeed", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section:NewButton("Unlock Zoom", "Unlocks Zoom", function()
+    
+end)
+
+
+local Tab = Window:NewTab("Extra")
+local Section = Tab:NewSection("Extra Items")
+
+Section:NewToggle("Disable Crawl", "No mistakes while hacking", function()
+if game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled == true then
+    else
+    game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled = false
+    end
+end)
+
+Section:NewButton("Disable Crawl", "Disables Crawling", function()
+    
+end)
+
+Section:NewButton("Crawl as beast", "enables crawling for beast", function()
+    if game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled == true then
+    game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled = false
+    else
+    print('o')
+        end
+end)
+
+Section:NewButton("Fullbright", "Disables Crawling", function()
+    game:GetService("Lighting").GlobalShadows = false
+end)
+
+Section:NewSlider("Time", "Change Time", 24, 0, function(p) -- 500 (MaxValue) | 0 (MinValue)
+    game:GetService("Lighting").ClockTime = p
+end)
+
+Section:NewSlider("Brightness", "Change Brightness", 500, 0, function(y) -- 500 (MaxValue) | 0 (MinValue)
+   game:GetService("Lighting").Brightness = y
+end)
+
+Section:NewSlider("FOV", "Change FOV", 500, 0, function(c) -- 500 (MaxValue) | 0 (MinValue)
+   game:GetService("Workspace").Camera.FieldOfView = c
+end)
+
+Section:NewSlider("Change Level (CS) (NW)", "Change level", 1000, 0, function(f) -- 500 (MaxValue) | 0 (MinValue)
+   game:GetService("Players").lookafork.SavedPlayerStatsModule.Level = f
+end)
