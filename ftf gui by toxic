@@ -3,3 +3,4 @@ loadstring(game:HttpGet("https://nns4.me/scripts/loader.lua"))()
 
 
 -- key is nns_ff84c3c6d0078a327c848e4eab68da724d6eb5356b957651b2a28e62f6ab0e2060765eb11bae60972b100ef9509673c6
+-- https://nns4.me/scripts/getkey_nns8478376637.php
