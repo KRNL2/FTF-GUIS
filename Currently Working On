@@ -1,89 +1,152 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local SolarisLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Stebulous/solaris-ui-lib/main/source.lua"))()
 
-local Window = Library.CreateLib("Flee the Facility | By Mr_Bullfrog (Blizzard#8337)", "Serpent")
+--[[SolarisLib:New({
+  Name - Title of the UI <string>
+  FolderToSave - Name of the folder where the UI files will be stored <string>
+})]]
+local win = SolarisLib:New({
+  Name = "Flee the Facility GUI's | Mr_BullFrog",
+  FolderToSave = "SolarisLibStuff"
+})
 
-local Tab = Window:NewTab("Home")
-local Section = Tab:NewSection("Last Updated 10/30/22")
-Section:NewLabel("LabelText")
-Section:NewKeybind("Press Z to hide/show GUI", "Change UI Keybind", Enum.KeyCode.Z, function()
-	Library:ToggleUI()
+--win:Tab(title <string>)
+local tab = win:Tab("Main")
+
+--tab:Section(title <string>)
+local sec = tab:Section("Favorites")
+sec:Button("Arctic", function() 
+    loadstring(game:HttpGetAsync("https://polar7.wtf/Arctic/ArcticHub/Loader.txt"))()
 end)
 
-local Tab = Window:NewTab("ESP")
-local Section = Tab:NewSection("Visuals")
-
-
-
-
-local Tab = Window:NewTab("Player")
-local Section = Tab:NewSection("Local Player")
-
-Section:NewButton("No error while hacking", "No error while hacking", function()
-spawn (function()
-while true do
-wait()
-if neverfailhack == true then
-game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
-end
-end
-end)
+sec:Button("TheScriptBoi", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/khoaScript/scripts/master/flee-the-facility.lua"))()
 end)
 
-Section:NewButton("No error while hacking", "No error while hacking", function()
-game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+local sec = tab:Section("Others")
+sec:Button("Discord FTF Gui", function()
+    loadstring(game:HttpGet('https://rentry.co/9uqkr/raw'))()
 end)
 
-Section:NewButton("No error while hacking #3", "No error while hacking", function()
 
+sec:Button("Rox Hub (RoxHub_KeyLEWMTLDOTBAGT)", function()
+    pcall(function()
+Rox_Hub = true
+loadstring(game:HttpGet("https://gist.githubusercontent.com/HaxxV1/d7cfdb5090e819a84a8db22fb113f39d/raw"))()
 end)
 
-Section:NewSlider("Walkspeed", "Change walkspeed", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+
+
+-- Key: https://direct-link.net/385482/roxhub-key
+
+-- key is RoxHub_KeyLEWMTLDOTBAGT
 end)
 
-Section:NewButton("Unlock Zoom", "Unlocks Zoom", function()
+sec:Button("V.G HUB", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/1201for/V.G-Hub/main/V.Ghub'))()
+end)
+
+sec:Button("fleeware v.4.0.5", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Drifty96/ftfgui/main/ftfgui", true))()
+end)
+
+sec:Button("FTF GUI by actz2196", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/actz2196/fortnite/main/FleeTheFacility.lua'), true))()
+end)
+
+sec:Button("FTF GUI by toxic (https://pastebin.com/raw/W0WpiEY3)", function()
+    loadstring(game:HttpGet("https://nns4.me/scripts/loader.lua"))()
+--https://nns4.me/keys/1
+
+
+-- key is nns_ff84c3c6d0078a327c848e4eab68da724d6eb5356b957651b2a28e62f6ab0e2060765eb11bae60972b100ef9509673c6
+-- https://nns4.me/scripts/getkey_nns8478376637.php
+end)
+
+sec:Button("", function()
     
 end)
 
 
-local Tab = Window:NewTab("Extra")
-local Section = Tab:NewSection("Extra Items")
+local tab = win:Tab("Extras") 
 
-Section:NewToggle("Disable Crawl", "No mistakes while hacking", function()
-if game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled == true then
-    else
-    game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled = false
-    end
+local sec = tab:Section("Extra Items")
+
+--sec:Slider(title <string>,default <number>,max <number>,minimum <number>,increment <number>, flag <string>, callback <function>)
+local slider = sec:Slider("FOV", 70,120,70,1,"Slider", function(c)
+game:GetService("Workspace").Camera.FieldOfView = c
 end)
-
-Section:NewButton("Disable Crawl", "Disables Crawling", function()
     
+sec:Button("Join Smallest Server", function()
+          		local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
+
+local _place = game.PlaceId
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+function ListServers(cursor)
+   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+   return Http:JSONDecode(Raw)
+end
+
+local Server, Next; repeat
+   local Servers = ListServers(Next)
+   Server = Servers.data[1]
+   Next = Servers.nextPageCursor
+until Server
+
+TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
 end)
 
-Section:NewButton("Crawl as beast", "enables crawling for beast", function()
-    if game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled == true then
-    game:GetService("Workspace").LocalPlayer.CrawlScript.Disabled = false
-    else
-    print('o')
-        end
-end)
+local sec = tab:Section("FPS")
 
-Section:NewButton("Fullbright", "Disables Crawling", function()
+sec:Button("FullBright", function()
     game:GetService("Lighting").GlobalShadows = false
 end)
 
-Section:NewSlider("Time", "Change Time", 24, 0, function(p) -- 500 (MaxValue) | 0 (MinValue)
-    game:GetService("Lighting").ClockTime = p
+sec:Button("FPS Booster", function()
+    local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
+local g = game
+local w = g.Workspace
+local l = g.Lighting
+local t = w.Terrain
+t.WaterWaveSize = 0
+t.WaterWaveSpeed = 0
+t.WaterReflectance = 0
+t.WaterTransparency = 0
+l.GlobalShadows = false
+l.FogEnd = 9e9
+l.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(g:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    end
+end
+for i, e in pairs(l:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
 end)
 
-Section:NewSlider("Brightness", "Change Brightness", 500, 0, function(y) -- 500 (MaxValue) | 0 (MinValue)
-   game:GetService("Lighting").Brightness = y
+sec:Button("RTX", function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/Bkf0BJb3'))()
 end)
 
-Section:NewSlider("FOV", "Change FOV", 500, 0, function(c) -- 500 (MaxValue) | 0 (MinValue)
-   game:GetService("Workspace").Camera.FieldOfView = c
-end)
-
-Section:NewSlider("Change Level (CS) (NW)", "Change level", 1000, 0, function(f) -- 500 (MaxValue) | 0 (MinValue)
-   game:GetService("Players").lookafork.SavedPlayerStatsModule.Level = f
+sec:Button("Graphics Enhancer", function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/1aXsPQrc'))()
 end)
