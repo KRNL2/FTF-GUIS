@@ -62,10 +62,6 @@ sec:Button("FTF GUI by toxic (https://pastebin.com/raw/W0WpiEY3)", function()
 -- https://nns4.me/scripts/getkey_nns8478376637.php
 end)
 
-sec:Button("", function()
-    
-end)
-
 
 local tab = win:Tab("Extras") 
 
@@ -78,11 +74,22 @@ end)
 
 --sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
 local toggle = sec:Toggle("No error while hacking", false,"Toggle", function()
-if neverfailhack == true then
-game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.MinigameResult == false then
+   game:GetService("Players").LocalPlayer.TempPlayerStatsModule.MinigameResult = true
 else
-    if neverfailhack == false then
-    game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",false)
+  if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.MinigameResult == true then
+        game:GetService("Players").LocalPlayer.TempPlayerStatsModule.MinigameResult = false
+end
+end
+end)
+
+--sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
+local toggle = sec:Toggle("Crawl As Beast | Disable/Enable Crawl", false,"Toggle", function()
+if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value == true then
+    game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value = false
+else
+    if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value == false then  
+    game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value = true
 end
 end
 end)
