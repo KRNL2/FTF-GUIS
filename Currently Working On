@@ -84,15 +84,20 @@ end
 end)
 
 --sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
-local toggle = sec:Toggle("Crawl As Beast | Disable/Enable Crawl", true,"Toggle", function()
-if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value == true then
-    game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value = false
-else
-    if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value == false then  
+local toggle = sec:Toggle("Crawl As Beast | Disable/Enable Crawl", false,"Toggle", function()
+if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value == false then
     game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value = true
+else
+    if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value == true then  
+    game:GetService("Players").LocalPlayer.TempPlayerStatsModule.DisableCrawl.Value = false
 end
 end
 end)
+
+sec:Button("No error while hacking", function()
+    game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+end)
+
 
     
 sec:Button("Join Smallest Server", function()
