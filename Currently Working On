@@ -10,7 +10,7 @@ local win = SolarisLib:New({
 })
 
 --win:Tab(title <string>)
-local tab = win:Tab("Main")
+local tab = win:Tab("GUIS")
 
 --tab:Section(title <string>)
 local sec = tab:Section("Favorites")
@@ -75,6 +75,18 @@ local sec = tab:Section("Extra Items")
 local slider = sec:Slider("FOV", 70,120,70,1,"Slider", function(c)
 game:GetService("Workspace").Camera.FieldOfView = c
 end)
+
+--sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
+local toggle = sec:Toggle("No error while hacking", false,"Toggle", function()
+if neverfailhack == true then
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+else
+    if neverfailhack == false then
+    game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",false)
+end
+end
+end)
+
     
 sec:Button("Join Smallest Server", function()
           		local Http = game:GetService("HttpService")
