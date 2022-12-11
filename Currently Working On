@@ -94,6 +94,12 @@ end
 end
 end)
 
+sec:Button("No error while hacking", function()
+    wait()
+if neverfailhack == true then
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+end
+end)
     
 sec:Button("Join Smallest Server", function()
           		local Http = game:GetService("HttpService")
