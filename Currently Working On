@@ -62,6 +62,10 @@ sec:Button("FTF GUI by toxic (https://pastebin.com/raw/W0WpiEY3)", function()
 -- https://nns4.me/scripts/getkey_nns8478376637.php
 end)
 
+sec:Button("Eclipse Hub", function()
+    
+end)
+
 
 local tab = win:Tab("Extras") 
 
