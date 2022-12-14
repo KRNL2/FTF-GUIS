@@ -78,6 +78,15 @@ local slider = sec:Slider("FOV", 70,120,70,1,"Slider", function(c)
 game:GetService("Workspace").Camera.FieldOfView = c
 end)
 
+--sec:Slider(title <string>,default <number>,max <number>,minimum <number>,increment <number>, flag <string>, callback <function>)
+local slider = sec:Slider("Walkspeed", 16,500,0,2.5,"Slider", function(t)
+  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = t
+end)
+
+
+
+
+
 --sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
 local toggle = sec:Toggle("No error while hacking", false,"Toggle", function()
 if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.MinigameResult == false then
@@ -100,8 +109,104 @@ end
 end
 end)
 
+local toggle = sec:Toggle("Rejoin If Beast [Still in progress]", true,"Toggle", function()
+if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.IsBeast.Value == true then
+    	    local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+
+coroutine.resume(Rejoin)
+else
+    if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.IsBeast.Value == true then
+    	    local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+
+coroutine.resume(Rejoin)
+end
+end
+end)
+
+local toggle = sec:Toggle("Anti-Ragdoll", true,"Toggle", function()
+if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.Ragdoll.Value == true then
+    game:GetService("Players").LocalPlayer.TempPlayerStatsModule.Ragdoll.Value = false
+else
+    if game:GetService("Players").LocalPlayer.TempPlayerStatsModule.Ragdoll.Value == true then
+        game:GetService("Players").LocalPlayer.TempPlayerStatsModule.Ragdoll.Value = false
+end
+end
+end)
+
+
+
+
+local toggle = sec:Toggle("No error while hacking [TESTING]", false,"Toggle", function()
+    if neverfailhack == false then
+wait()
+if neverfailhack == true then
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+else
+    wait()
+if neverfailhack == true then
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+end
+end
+end
+end)
+
+local toggle = sec:Toggle("No error while hacking [TESTING 2]", false,"Toggle", function()
+if game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value == false then
+game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value = true
+else
+if game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value == false then
+game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value = true
+end
+end
+end)
+
+local toggle = sec:Toggle("No error while hacking [TESTING 3]", false,"Toggle", function()
+if game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value == true then
+game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value = false
+else
+if game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value == true then
+game:GetService("Players").lookafork.TempPlayerStatsModule.MinigameResult.Value = false
+end
+end
+end)
+
+sec:Button("Unlock Zoom", function()
+game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 500
+end)
+
 sec:Button("No error while hacking", function()
-    game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+wait()
+if neverfailhack == true then
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",false)
+end
+end)
+
+sec:Button("XRay (X)", function()
+ loadstring(game:HttpGet(('https://raw.githubusercontent.com/KRNL2/newxray/main/op')))()
 end)
 
 
@@ -179,4 +284,570 @@ end)
 
 sec:Button("Graphics Enhancer", function()
     loadstring(game:HttpGet('https://pastebin.com/raw/1aXsPQrc'))()
+end)
+
+local sec = tab:Section("Functions")
+sec:Button("Loop Fire Closest TouchInterest", function(ClosestTouch)
+		if ClosestTouch == true then
+
+        if closesttouch ~= nil then
+                  closesttouch:Disconnect()
+               end
+
+function TouchPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       firetouchinterest(plr.Character[BasePart], Part, 0)
+       task.wait()
+       firetouchinterest(plr.Character[BasePart], Part, 1)
+   end
+end
+
+closesttouch = game:GetService("RunService").Stepped:Connect(function()
+ 
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("TouchTransmitter") then
+          for i,b in pairs(v.Parent:GetChildren()) do
+              if b:IsA("BasePart") then
+           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - b.Position).Magnitude < 25 then
+           TouchPart(v)
+
+end
+end
+end
+end
+end
+end)
+          else
+			   ClosestTouch = false
+			   if closesttouch ~= nil then
+                  closesttouch:Disconnect()
+               end
+	end
+end)
+
+sec:Button("Loop Fire Closest ClickDetector", function(ClosestClick)
+    		if ClosestClick == true then
+
+        if closestclick ~= nil then
+                  closestclick:Disconnect()
+               end
+
+function ClickPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       fireclickdetector(Part)
+   end
+end
+
+closestclick = game:GetService("RunService").Stepped:Connect(function()
+
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("ClickDetector") then
+          for i,b in pairs(v.Parent:GetChildren()) do
+              if b:IsA("BasePart") then
+           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - b.Position).Magnitude < 25 then
+           ClickPart(v)
+
+end
+end
+end
+end
+end
+end)
+          else
+			   ClosestClick = false
+			   if closestclick ~= nil then
+                  closestclick:Disconnect()
+               end
+	end
+end)
+
+sec:Button("Loop Fire Closest ProximityPrompt", function(ClosestProx)
+		if ClosestProx == true then
+
+        if closestprox ~= nil then
+                  closestprox:Disconnect()
+               end
+
+closestprox = game:GetService("RunService").Stepped:Connect(function()
+
+    for i, v in pairs(game:GetService("Workspace"):GetDescendants()) do -- ProximityPrompt can always be in workspace, so not change.
+           if v:IsA("BasePart") then -- Detects, is there any part or meshpart to worked.
+               if game:GetService("Players").LocalPlayer:DistanceFromCharacter(v.Position) < 25 then -- You actually can do it with distance, but if you not want, then delete it and last 'end'.
+                   if v:FindFirstChild("ProximityPrompt") then -- Detects, is proximityprompt in part or meshpart.
+                       fireproximityprompt(v) --- Now we firing proximityprompt/s. You can also add near with proximityprompt distance, example fireproximityprompt(v.ProximityPrompt, NUMBER OF DISTANCE)
+                   end
+               end
+           end
+       end   
+end)
+          else
+			   ClosestProx = false
+			   if closestprox ~= nil then
+                  closestprox:Disconnect()
+               end
+	end
+end)
+
+sec:Button("Loop Fire Closest Seat", function(ClosestSeat)
+    		if ClosestSeat == true then
+
+        if closestseat ~= nil then
+                  closestseat:Disconnect()
+               end
+        function SitPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       Part:Sit(plr.Character:FindFirstChildOfClass("Humanoid"))
+   end
+end
+
+closestseat = game:GetService("RunService").Stepped:Connect(function()
+
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("Seat") or v:IsA("VehicleSeat") then
+           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude < 25 then
+           SitPart(v)
+
+end
+end
+end
+end)
+          else
+			   ClosestSeat = false
+			   if closestseat ~= nil then
+                  closestseat:Disconnect()
+               end
+	end
+end)
+
+sec:Button("Fire Closest TouchInterest", function()
+          	function TouchPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       firetouchinterest(plr.Character[BasePart], Part, 0)
+       task.wait()
+       firetouchinterest(plr.Character[BasePart], Part, 1)
+   end
+end
+ 
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("TouchTransmitter") then
+          for i,b in pairs(v.Parent:GetChildren()) do
+              if b:IsA("BasePart") then
+           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - b.Position).Magnitude < 25 then
+           TouchPart(v)
+
+end
+end
+end
+end
+end
+end)
+
+sec:Button("Fire Closest ClickDetector", function()
+    	Callback = function()
+      	function ClickPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       fireclickdetector(Part)
+   end
+end
+
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("BasePart") then
+            for i,b in pairs(v:GetDescendants()) do
+                if b:IsA("ClickDetector") then
+          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude < 25 then
+             ClickPart(b)
+          end
+end
+end
+end
+end
+end
+end)
+
+sec:Button("Fire Closest ProximityPrompt", function()
+    function ProxPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       fireproximityprompt(Part)
+   end
+end
+
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("BasePart") then
+            for i,b in pairs(v:GetDescendants()) do
+                if b:IsA("ProximityPrompt") then
+          if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude < 25 then
+             ProxPart(b)
+          end
+end
+end
+end
+end
+end)
+
+sec:Button("Fire Closest Seat", function()
+          	function SitPart(Part)
+   if Part and game.Players.LocalPlayer.Character then
+       Part:Sit(plr.Character:FindFirstChildOfClass("Humanoid"))
+   end
+end
+
+for i,v in pairs(game.Workspace:GetDescendants()) do
+       if v:IsA("Seat") or v:IsA("VehicleSeat") then
+           if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude < 25 then
+           SitPart(v)
+
+end
+end
+end
+end)
+
+sec:Button("Fire All TouchInterests", function()
+    local Root = game.Players.LocalPlayer.Character[BasePart] or game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("BasePart")
+	local function Touch(x)
+		x = x.FindFirstAncestorWhichIsA(x, "Part")
+		if x then
+			if firetouchinterest then
+				return task.spawn(function()
+					firetouchinterest(x, Root, 1, wait() and firetouchinterest(x, Root, 0))
+				end)
+			end
+			x.CFrame = Root.CFrame
+		end
+	end
+	for _, v in ipairs(workspace:GetDescendants()) do
+		if v.IsA(v, "TouchTransmitter") then
+			Touch(v)
+		end
+	end
+end)
+
+sec:Button("Fire All ClickDetectors", function()
+          	for i,v in pairs(game.Workspace:GetDescendants()) do
+			if v:IsA("ClickDetector") then
+				fireclickdetector(v)
+			end
+		end
+end)
+
+sec:Button("Fire All ProximityPrompts", function()
+          	for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("ProximityPrompt") then
+				fireproximityprompt(v)
+			end
+		end
+end)
+
+sec:Button("Fire All Seats", function()
+          	for i,v in pairs(workspace:GetDescendants()) do
+			if v:IsA("Seat") or v:IsA("VehicleSeat") then
+				v:Sit(plr.Character:FindFirstChildOfClass("Humanoid"))
+			end
+		end
+end)
+
+sec:Button("No ClickDetector Limits", function(NOClickLimits)
+    		if NOClickLimits == true then
+			   if clickDied ~= nil then
+				  clickDied:Disconnect()
+			   end	   
+               for i,v in pairs(game.Workspace:GetDescendants()) do
+		if v:IsA("ClickDetector") then
+			v.MaxActivationDistance = math.huge
+		end
+	end
+	clickDied = game:GetService("Workspace").DescendantAdded:Connect(function(clickishere)
+       if clickishere:IsA("ClickDetector") then
+		  clickishere.MaxActivationDistance = math.huge
+	   end
+	end)
+          else
+			   NOClickLimits = false
+			   if clickDied ~= nil then
+				  clickDied:Disconnect()
+			   end
+               for i,b in pairs(game.Workspace:GetDescendants()) do
+		if b:IsA("ClickDetector") then
+			b.MaxActivationDistance = "32"
+		end
+		end	
+	end
+end)
+
+sec:Button("No ProximityPrompt Limits", function(NOProxLimits)
+    		if NOProxLimits == true then
+			   if proxDied ~= nil then
+				  proxDied:Disconnect()
+			   end	  
+               for i,v in pairs(game.Workspace:GetDescendants()) do
+		if v:IsA("ProximityPrompt") then
+			v.MaxActivationDistance = math.huge
+		end
+	end
+	proxDied = game:GetService("Workspace").DescendantAdded:Connect(function(proxishere)
+        if proxishere:IsA("ProximityPrompt") then
+		   proxishere.MaxActivationDistance = math.huge
+		end	
+	end)
+          else
+			   NOProxLimits = false
+			   if proxDied ~= nil then
+				  proxDied:Disconnect()
+			   end	   
+               for i,b in pairs(game.Workspace:GetDescendants()) do
+		if b:IsA("ProximityPrompt") then
+			b.MaxActivationDistance = "32"
+		end
+	end
+	end
+end)
+
+sec:Button("Instant Fire ProximityPrompt", function(InstantProx)
+    		if InstantProx == true then
+               PromptButtonHoldBegan = game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(prompt)
+			   fireproximityprompt(prompt)
+		end)
+          else
+			   InstantProx = false
+               if PromptButtonHoldBegan ~= nil then
+		PromptButtonHoldBegan:Disconnect()
+		PromptButtonHoldBegan = nil
+	end
+	end
+end)
+
+
+
+sec:Button("Show Selection ClickDetectors", function(ShowSCL)
+    		if ShowSCL == true then
+			   if selclick ~= nil then
+                  selclick:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("ClickDetector") and object.Parent:FindFirstChild("SelectionBox") == nil then
+                local selectionbox = Instance.new("SelectionBox", object.Parent)
+                selectionbox.Adornee = object.Parent
+            end
+        end
+		selclick = game:GetService("Workspace").DescendantAdded:Connect(function(clicksel)
+           if clicksel:IsA("ClickDetector") and clicksel.Parent:FindFirstChild("SelectionBox") == nil then
+		      local selectionbox = Instance.new("SelectionBox", clicksel.Parent)
+                selectionbox.Adornee = clicksel.Parent
+		   end	   
+		end)
+          else
+			   ShowSCL = false
+			   if selclick ~= nil then
+                  selclick:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("ClickDetector") and object.Parent:FindFirstChild("SelectionBox") ~= nil then
+                object.Parent:FindFirstChild("SelectionBox"):Destroy()
+            end
+        end
+	end
+end)
+
+sec:Button("Show Selection TouchInterests", function(ShowSCL)
+    		if ShowSCL == true then
+			   if seltouch ~= nil then
+                  seltouch:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("TouchTransmitter") and object.Parent:FindFirstChild("SelectionBox") == nil then
+                local selectionbox = Instance.new("SelectionBox", object.Parent)
+                selectionbox.Adornee = object.Parent
+            end
+        end
+		seltouch = game:GetService("Workspace").DescendantAdded:Connect(function(touchsel)
+           if touchsel:IsA("TouchTransmitter") and touchsel.Parent:FindFirstChild("SelectionBox") == nil then
+		      local selectionbox = Instance.new("SelectionBox", touchsel.Parent)
+                selectionbox.Adornee = touchsel.Parent
+		   end	   
+		end)
+          else
+			   ShowSCL = false
+			   if seltouch ~= nil then
+                  seltouch:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("TouchTransmitter") and object.Parent:FindFirstChild("SelectionBox") ~= nil then
+                object.Parent:FindFirstChild("SelectionBox"):Destroy()
+            end
+        end
+	end
+end)
+
+sec:Button("Show Selection ProximityPrompts", function(ShowSCL)
+    		if ShowSCL == true then
+			   if selprox ~= nil then
+                  selprox:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("ProximityPrompt") and object.Parent:FindFirstChild("SelectionBox") == nil then
+                local selectionbox = Instance.new("SelectionBox", object.Parent)
+                selectionbox.Adornee = object.Parent
+            end
+        end
+		selprox = game:GetService("Workspace").DescendantAdded:Connect(function(proxsel)
+           if proxsel:IsA("ProximityPrompt") and proxsel.Parent:FindFirstChild("SelectionBox") == nil then
+		      local selectionbox = Instance.new("SelectionBox", proxsel.Parent)
+                selectionbox.Adornee = proxsel.Parent
+		   end	   
+		end)
+          else
+			   ShowSCL = false
+			   if selprox ~= nil then
+                  selprox:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("ProximityPrompt") and object.Parent:FindFirstChild("SelectionBox") ~= nil then
+                object.Parent:FindFirstChild("SelectionBox"):Destroy()
+            end
+        end
+	end
+end)
+
+sec:Button("Show Selection Seats", function(ShowSeatPart)
+    		if ShowSeatPart == true then
+			   if selseat ~= nil then
+                  selseat:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("Seat") and object.Parent:FindFirstChild("SelectionBox") == nil then
+                local selectionbox = Instance.new("SelectionBox", object.Parent)
+                selectionbox.Adornee = object.Parent
+            end
+        end
+		selseat = game:GetService("Workspace").DescendantAdded:Connect(function(seatsel)
+           if seatsel:IsA("Seat") and seatsel.Parent:FindFirstChild("SelectionBox") == nil then
+		      local selectionbox = Instance.new("SelectionBox", seatsel.Parent)
+                selectionbox.Adornee = seatsel.Parent
+		   end	   
+		end)
+          else
+			   ShowSeatPart = false
+			   if selseat ~= nil then
+                  selseat:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("Seat") and object.Parent:FindFirstChild("SelectionBox") ~= nil then
+                object.Parent:FindFirstChild("SelectionBox"):Destroy()
+            end
+        end
+	end
+end)
+
+sec:Button("Show Selection CanCollideNoclip Parts", function(sinvisparts)
+    		if sinvisparts == true then
+			  if selcanc ~= nil then
+                  selcanc:Disconnect()
+			   end
+              for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("BasePart") and object.CanCollide == false and object.Parent:FindFirstChild("SelectionBox") == nil then
+                local selectionbox = Instance.new("SelectionBox", object.Parent)
+                selectionbox.Adornee = object.Parent
+            end
+        end
+		selcanc = game:GetService("Workspace").DescendantAdded:Connect(function(canc)
+           if canc:IsA("BasePart") and canc.CanCollide == false and canc.Parent:FindFirstChild("SelectionBox") == nil then
+		      local selectionbox = Instance.new("SelectionBox", canc.Parent)
+                selectionbox.Adornee = canc.Parent
+		   end
+		end)
+          else
+			   sinvisparts = false
+			   if selcanc ~= nil then
+                  selcanc:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("BasePart") and object.Transparency == 1 and object.Parent:FindFirstChild("SelectionBox") ~= nil then
+                object.Parent:FindFirstChild("SelectionBox"):Destroy()
+            end
+        end
+	end
+end)
+
+sec:Button("Show Selection Invisible Parts", function(sinvisparts)
+    		if sinvisparts == true then
+			  if selinvisp ~= nil then
+                  selinvisp:Disconnect()
+			   end
+              for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("BasePart") and object.Transparency == 1 and object.Parent:FindFirstChild("SelectionBox") == nil then
+                local selectionbox = Instance.new("SelectionBox", object.Parent)
+                selectionbox.Adornee = object.Parent
+            end
+        end
+		selinvisp = game:GetService("Workspace").DescendantAdded:Connect(function(invissel)
+           if invissel:IsA("BasePart") and invissel.Transparency == 1 and invissel.Parent:FindFirstChild("SelectionBox") == nil then
+		      local selectionbox = Instance.new("SelectionBox", invissel.Parent)
+                selectionbox.Adornee = invissel.Parent
+		   end	   
+		end)
+          else
+			   sinvisparts = false
+			   if selinvisp ~= nil then
+                  selinvisp:Disconnect()
+			   end
+               for _, object in next, game.Workspace:GetDescendants() do
+            if object:IsA("BasePart") and object.Transparency == 1 and object.Parent:FindFirstChild("SelectionBox") ~= nil then
+                object.Parent:FindFirstChild("SelectionBox"):Destroy()
+            end
+        end
+		showninParts = {}
+	end
+end)
+
+sec:Button("Show Invisible Parts", function(invisparts)
+    		if invisparts == true then
+               for i,v in pairs(game.Workspace:GetDescendants()) do
+		if v:IsA("BasePart") and v.Transparency == 1 then
+			if not table.find(shownParts,v) then
+				table.insert(shownParts,v)
+			end
+			v.Transparency = 0
+		end
+	end
+          else
+			   invisparts = false
+               for i,v in pairs(shownParts) do
+		v.Transparency = 1
+	end
+	shownParts = {}
+	end
+end)
+
+sec:Button("Invisible Parts", function(invisparts)
+    		if invisparts == true then
+               for i,v in pairs(game.Workspace:GetDescendants()) do
+		if v:IsA("BasePart") then
+			if not table.find(showninvParts,v) then
+				table.insert(showninvParts,v)
+			end
+			v.Transparency = 1
+		end
+	end
+          else
+			   invisparts = false
+               for i,v in pairs(showninvParts) do
+		v.Transparency = 0
+	end
+	showninvParts = {}
+	end
+end)
+
+sec:Button("Visible Parts", function(invisparts)
+    		if invisparts == true then
+               for i,v in pairs(game.Workspace:GetDescendants()) do
+		if v:IsA("BasePart") then
+			if not table.find(shownvisParts,v) then
+				table.insert(shownvisParts,v)
+			end
+			v.Transparency = 0
+		end
+	end
+          else
+			   invisparts = false
+	shownvisParts = {}
+	end
 end)
