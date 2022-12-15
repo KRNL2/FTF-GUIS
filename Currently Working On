@@ -71,12 +71,10 @@ end)
 local tab = win:Tab("Misc/Fun") 
 local sec = tab:Section("Misc/Fun")
 
-sec:Button("Get Hammer without being Beast (After game if your beast)", function()
+sec:Button("Get Hammer without being Beast", function()
 local name = game.Players.LocalPlayer.Name
 game:GetService("Workspace")[Name].Hammer.Handle.SoundChaseMusic:Destroy()
-
 game:GetService("Workspace")[Name].Hammer.Handle.SoundHeartBeat:Destroy()
-
 game:GetService("Workspace")[Name].Gemstone.Handle:Destroy()
 end)
 
@@ -92,6 +90,159 @@ local sec = tab:Section("Extra Items")
 --sec:Slider(title <string>,default <number>,max <number>,minimum <number>,increment <number>, flag <string>, callback <function>)
 local slider = sec:Slider("FOV", 70,120,70,1,"Slider", function(c)
 game:GetService("Workspace").Camera.FieldOfView = c
+end)
+
+
+local toggle = sec:Toggle("Better ESP", false,"Toggle", function()
+    spawn(function()
+local mt = getrawmetatable(game)
+make_writeable(mt)
+local namecall = mt.__namecall
+mt.__namecall = newcclosure(function(self, ...)
+local method = getnamecallmethod()
+local args = {...}
+if method == "FireServer" and args[1] == "SetPlayerMinigameResult" and args[2] == false then
+for i=1,50 do
+game.ReplicatedStorage.RemoteEvent:FireServer("SetPlayerMinigameResult",true)
+wait()
+end
+end
+return namecall(self, ...)
+end)
+end)
+spawn(function()
+function CreateESPPart(BodyPart,r,g,b)
+local ESPPartparent = BodyPart
+local Box = Instance.new("BoxHandleAdornment")
+Box.Size = BodyPart.Size + Vector3.new(0.1, 0.1, 0.1)
+Box.Name = "ESPPart"
+Box.Adornee = ESPPartparent
+Box.Color3 = Color3.fromRGB(r,g,b)
+Box.AlwaysOnTop = true
+Box.ZIndex = 5
+Box.Transparency = 0.8
+Box.Parent = BodyPart
+end
+function loadCheck(plr,chr)
+if chr:findFirstChild("Humanoid") then
+local part = chr:getChildren()
+for i=1,#part do
+if part[i].ClassName == "Part" then
+CreateESPPart(part[i], 0,255,0)
+spawn(function()
+while true do
+wait(0.1)
+if plr:findFirstChild("TempPlayerStatsModule") then
+if plr.TempPlayerStatsModule.IsBeast.Value then
+if part[i]:findFirstChild("ESPPart") then
+part[i].ESPPart:remove()
+end
+CreateESPPart(part[i], 255,0,0)
+else
+if part[i]:findFirstChild("ESPPart") then
+part[i].ESPPart:remove()
+end
+CreateESPPart(part[i], 0,255,0)
+end
+end
+end
+end)
+end
+end
+end
+end
+local player = game.Players:GetChildren()
+for i=1,#player do
+if player[i].Name == game.Players.LocalPlayer.Name then
+else
+player[i].CharacterAdded:Connect(function(character)
+wait(0.5)
+loadCheck(player[i],player[i].Character)
+end)
+loadCheck(player[i],player[i].Character)
+end
+end
+game.Players.PlayerAdded:Connect(function(player)
+player.CharacterAdded:Connect(function(character)
+wait(0.5)
+loadCheck(player,character)
+end)
+end)
+end)
+spawn(function()
+while wait(0.5) do
+game.Lighting.FogEnd = 10000000
+local w = workspace:getDescendants()
+for i=1,#w do
+if w[i].ClassName == "Part" then
+if w[i].Name == "PodTrigger" then
+local stuff = w[i].Parent:getChildren()
+for i=1,#stuff do
+if stuff[i].ClassName == "Part" then
+if stuff[i].Transparency ~= 1 then
+if stuff[i]:findFirstChild("ESPPart") then
+else
+local Box = Instance.new("BoxHandleAdornment")
+Box.Size = stuff[i].Size
+Box.Name = "ESPPart"
+Box.Adornee = stuff[i]
+Box.Color3 = Color3.fromRGB(0,0,255)
+Box.AlwaysOnTop = true
+Box.ZIndex = 5
+Box.Transparency = 0.8
+Box.Parent = stuff[i]
+end
+end
+end
+end
+end
+end
+if w[i].Name == "Screen" then
+local screen = w[i]
+local stuff = w[i].Parent:getChildren()
+for i=1,#stuff do
+if stuff[i].ClassName == "Part" then
+if stuff[i].Transparency ~= 1 then
+if stuff[i]:findFirstChild("ESPPart") then
+else
+local Box = Instance.new("BoxHandleAdornment")
+Box.Size = stuff[i].Size
+Box.Name = "ESPPart"
+Box.Adornee = stuff[i]
+Box.Color3 = Color3.fromRGB(100,100,255)
+Box.AlwaysOnTop = true
+Box.ZIndex = 5
+Box.Transparency = 0.8
+Box.Parent = stuff[i]
+spawn(function()
+while screen ~= nil do
+Box.Color3 = screen.Color
+wait(0.5)
+end
+end)
+end
+end
+end
+end
+end
+end
+end
+end)
+end)
+
+
+
+
+
+sec:Button("Never fail hacking", function()
+local oldnc
+oldnc = hookmetamethod(game,"__namecall", newcclosure(function(name, ...)
+       local Args = {...}
+       if not checkcaller() and tostring(name) == "RemoteEvent" and Args[1] == "SetPlayerMinigameResult" then
+           Args[2] = true
+       end
+       return oldnc(name, unpack(Args))
+   end))
 end)
 
 
@@ -116,15 +267,8 @@ oldnc = hookmetamethod(game,"__namecall",newcclosure(function(name, ...)
    end))
 end)
 
-sec:Button("Never fail hacking", function()
-local oldnc
-oldnc = hookmetamethod(game,"__namecall", newcclosure(function(name, ...)
-       local Args = {...}
-       if not checkcaller() and tostring(name) == "RemoteEvent" and Args[1] == "SetPlayerMinigameResult" then
-           Args[2] = true
-       end
-       return oldnc(name, unpack(Args))
-   end))
+sec:Button("Anti-Ragdoll", function()
+
 end)
 
 
@@ -162,7 +306,8 @@ end)
 local sec = tab:Section("FPS")
 
 sec:Button("FullBright", function()
-    game:GetService("Lighting").GlobalShadows = false
+game.Lighting.FogEnd = 100000
+game.Lighting.FogStart = 100000
 end)
 
 sec:Button("FPS Booster", function()
