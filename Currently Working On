@@ -347,8 +347,19 @@ end)
 local sec = tab:Section("FPS")
 
 sec:Button("FullBright", function()
-game.Lighting.FogEnd = 100000
-game.Lighting.FogStart = 100000
+game:GetService("Lighting").Brightness = 2
+game:GetService("Lighting").ClockTime = 14
+game:GetService("Lighting").FogEnd = 100000
+game:GetService("Lighting").GlobalShadows = false
+game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+end)
+
+sec:Button("Remove Fog", function()
+while true do
+wait()
+game.Lighting.FogEnd = 1000000
+wait()
+end
 end)
 
 sec:Button("FPS Booster", function()
@@ -397,4 +408,9 @@ end)
 
 sec:Button("Graphics Enhancer", function()
     loadstring(game:HttpGet('https://pastebin.com/raw/1aXsPQrc'))()
+end)
+
+local sec = tab:Section("Hitbox Extender")
+sec:Button("Hitbox Extender GUI (Right Ctrl)", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/KRNL2/hitboxextender/main/source'))()
 end)
